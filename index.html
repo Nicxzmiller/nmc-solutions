@@ -4,84 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coming Soon | NMC Solutions</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    
+    <!-- Favicon for the site icon in the tab -->
+    <link rel="icon" href="https://github.com/Nicxzmiller/nmc-solutions/blob/master/frontend/src/assets/nmc-icon.png?raw=true" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
+        /* Full-screen canvas for the particle animation */
+        #c {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Canvas should be behind everything else */
+        }
+
         body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: white;
             text-align: center;
             height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
             flex-direction: column;
+            justify-content: center;
+            margin: 0;
         }
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
+
+        .content-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* Ensures the content stays above the particles */
+            z-index: 0;
         }
+
+        .logo img {
+            width: 250px;
+        }
+
         .countdown {
             font-size: 1.5rem;
             margin-top: 20px;
         }
-        .footer {
-            position: absolute;
+
+        footer {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8); /* Solid dark background for footer */
+            position: relative;
             bottom: 0;
             width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 10; /* Ensures footer stays above the particles */
         }
+
+        .email-form {
+            width: 350px;
+            margin-top: 30px;
+        }
+
         .navbar {
-            width: 100%;
+            z-index: 10; /* Ensure navbar is also on top of particles */
         }
     </style>
 </head>
 <body>
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-        <div class="container is-fluid">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="#">NMC Solutions</a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div id="navbarMenu" class="navbar-menu">
-                <div class="navbar-start">
-                </div>
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a class="button is-primary"><strong>Sign up</strong></a>
-                            <a class="button is-light">Log in</a>
-                        </div>
-                    </div>
-                </div>
+
+    <!-- The canvas for particle animation -->
+    <canvas id="c"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+        <div class="container">
+            <!-- Logo in the navbar -->
+            <a class="navbar-brand" href="#">
+                <img src="https://github.com/Nicxzmiller/nmc-solutions/blob/master/frontend/src/assets/nmc-svg.svg?raw=true" alt="NMC Solutions Logo" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Log in</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
-    
-    <div class="container">
-        <h1 class="logo">NMC Solutions</h1>
+
+    <!-- Main content -->
+    <div class="content-container text-center">
+        <!-- Logo Image -->
+        <div class="logo">
+            <img src="https://github.com/Nicxzmiller/nmc-solutions/blob/master/frontend/src/assets/nmc-group-image.png?raw=true" alt="NMC Group Image" class="img-fluid mb-4">
+        </div>
         <p class="lead">Empowering Your Digital Future</p>
         <h2>We're launching soon!</h2>
         <p class="countdown" id="countdown"></p>
         <p>Stay tuned for updates.</p>
-        <form>
-            <div class="field has-addons is-centered">
-                <div class="control">
-                    <input class="input" type="email" placeholder="Enter email" required>
-                </div>
-                <div class="control">
-                    <button class="button is-info">Notify Me</button>
-                </div>
+
+        <!-- Form for email input -->
+        <form action="https://formspree.io/f/mldjbjzg" method="POST" class="email-form mx-auto">
+            <div class="mb-3">
+                <input class="form-control" type="email" name="email" placeholder="Enter your email" required>
             </div>
+            <button class="btn w-100" style="background:#5EB299;" type="submit">Notify Me</button>
         </form>
     </div>
-    
-    <footer class="footer has-text-centered">
-        <div class="content has-text-white">
+
+    <!-- Footer -->
+    <footer class="footer bg-dark">
+        <div class="content">
             <p>Follow us on 
                 <a href="#">Twitter</a> | 
                 <a href="#">LinkedIn</a> | 
@@ -93,26 +133,150 @@
             </p>
         </div>
     </footer>
-    
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Include Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
+
     <script>
-        function countdown() {
-            const launchDate = new Date("2025-06-01T00:00:00").getTime();
-            const interval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = launchDate - now;
-                if (distance < 0) {
-                    document.getElementById("countdown").innerHTML = "We're live!";
-                    clearInterval(interval);
-                    return;
+        const particleVertex = `
+            attribute float scale;
+            uniform float uTime;
+
+            void main() {
+                vec3 p = position;
+                float s = scale;
+
+                p.y += (sin(p.x + uTime) * 0.5) + (cos(p.y + uTime) * 0.1) * 2.0;
+                p.x += (sin(p.y + uTime) * 0.5);
+                s += (sin(p.x + uTime) * 0.5) + (cos(p.y + uTime) * 0.1) * 2.0;
+
+                vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
+                gl_PointSize = s * 15.0 * (1.0 / -mvPosition.z);
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `;
+
+        const particleFragment = `
+            void main() {
+                gl_FragColor = vec4(1.0, 1.0, 1.0, 0.5);
+            }
+        `;
+
+        class Canvas {
+            constructor() {
+                this.config = {
+                    canvas: document.querySelector('#c'),
+                    winWidth: window.innerWidth,
+                    winHeight: window.innerHeight,
+                    aspectRatio: window.innerWidth / window.innerHeight,
+                    mouse: new THREE.Vector2(-10, -10)
+                };
+
+                this.onResize = this.onResize.bind(this);
+                this.onMouseMove = this.onMouseMove.bind(this);
+                this.animate = this.animate.bind(this);
+
+                this.initCamera();
+                this.initScene();
+                this.initRenderer();
+                this.initParticles();
+                this.bindEvents();
+                this.animate();
+            }
+
+            bindEvents() {
+                window.addEventListener('resize', this.onResize);
+                window.addEventListener('mousemove', this.onMouseMove, false);
+            }
+
+            initCamera() {
+                this.camera = new THREE.PerspectiveCamera(75, this.config.aspectRatio, 0.01, 1000);
+                this.camera.position.set(0, 6, 5);
+            }
+
+            initScene() {
+                this.scene = new THREE.Scene();
+            }
+
+            initRenderer() {
+                this.renderer = new THREE.WebGLRenderer({
+                    canvas: this.config.canvas,
+                    antialias: true,
+                });
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.renderer.setSize(this.config.winWidth, this.config.winHeight);
+            }
+
+            initParticles() {
+                const gap = 0.3;
+                const amountX = 200;
+                const amountY = 200;
+                const particleNum = amountX * amountY;
+                const particlePositions = new Float32Array(particleNum * 3);
+                const particleScales = new Float32Array(particleNum);
+                let i = 0;
+                let j = 0;
+
+                for (let ix = 0; ix < amountX; ix++) {
+                    for (let iy = 0; iy < amountY; iy++) {
+                        particlePositions[i] = ix * gap - ((amountX * gap) / 2);
+                        particlePositions[i + 1] = 0;
+                        particlePositions[i + 2] = iy * gap - ((amountX * gap) / 2);
+                        particleScales[j] = 1;
+                        i += 3;
+                        j++;
+                    }
                 }
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }, 1000);
+
+                this.particleGeometry = new THREE.BufferGeometry();
+                this.particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+                this.particleGeometry.setAttribute('scale', new THREE.BufferAttribute(particleScales, 1));
+
+                this.particleMaterial = new THREE.ShaderMaterial({
+                    transparent: true,
+                    vertexShader: particleVertex,
+                    fragmentShader: particleFragment,
+                    uniforms: {
+                        uTime: { type: 'f', value: 0 }
+                    }
+                });
+
+                this.particles = new THREE.Points(this.particleGeometry, this.particleMaterial);
+                this.scene.add(this.particles);
+            }
+
+            render() {
+                this.camera.lookAt(this.scene.position);
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            animate() {
+                this.particleMaterial.uniforms.uTime.value += 0.05;
+                requestAnimationFrame(this.animate);
+                this.render();
+            }
+
+            onMouseMove(e) {
+                this.config.mouse.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+                this.config.mouse.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+            }
+
+            onResize() {
+                this.config.winWidth = window.innerWidth;
+                this.config.winHeight = window.innerHeight;
+                this.camera.aspect = this.config.winWidth / this.config.winHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(this.config.winWidth, this.config.winHeight);
+            }
         }
-        countdown();
+
+        new Canvas();
     </script>
+
 </body>
 </html>
